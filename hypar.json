@@ -1,0 +1,95 @@
+{
+  "$schema": "https://hypar.io/Schemas/Function.json",
+  "id": "934baad0-9c24-4c75-88f6-449f6d89a8ad",
+  "name": "Hypar Pick Element",
+  "description": "The HyparPickElement function.",
+  "language": "C#",
+  "input_schema": {
+    "type": "object",
+    "properties": {}
+  },
+  "overrides": {
+    "Possible Element": {
+      "$hyparOrder": 0,
+      "context": "[*discriminator=Elements.PossibleElement]",
+      "identity": {
+        "Add Id": {
+          "type": "string"
+        }
+      },
+      "behaviors": {
+        "add": true,
+        "remove": true
+      },
+      "schema": {
+        "Description": {
+          "$hyparOrder": 0,
+          "type": "string",
+          "default": ""
+        },
+        "Other Field": {
+          "$hyparOrder": 1,
+          "type": "string",
+          "default": ""
+        },
+        "Transform": {
+          "$hyparOrder": 2,
+          "$ref": "https://schemas.hypar.io/Transform.json"
+        }
+      }
+    },
+    "Pick Element": {
+      "$hyparOrder": 0,
+      "context": "[*discriminator=Elements.PickableElement]",
+      "identity": {
+        "Add Id": {
+          "type": "string"
+        }
+      },
+      "behaviors": {
+        "add": true,
+        "remove": true
+      },
+      "schema": {
+        "Valid Options": {
+          "type": "array",
+          "items": {
+            "$hyparDisplayName": "String",
+            "type": "string"
+          }
+        },
+        "HyparPick Element": {
+          "$hyparPickElement": {
+            "queryOnOverrideTarget": true,
+            "context": "[*discriminator=Elements.PickableElement].Options",
+            "selfDependency": true,
+            "textQuery": "Description",
+            "identifier": "Add Id"
+          },
+          "properties": {
+            "Add Id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "Description": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "Transform": {
+          "$hyparOrder": 1,
+          "$ref": "https://schemas.hypar.io/Transform.json"
+        }
+      }
+    }
+  },
+  "outputs": [],
+  "repository_url": "https://github.com/hypar-io/function",
+  "last_updated": "0001-01-01T00:00:00",
+  "cli_version": "1.11.0-alpha.18"
+}
